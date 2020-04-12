@@ -13,7 +13,18 @@
     <script src="color_picker/dist/vanilla-picker.js"></script>
     <script src="draw.js"></script>
     <canvas id="canvas" width=500 height=500 style="display: inline-block; border: 1px black solid;"></canvas>
-    <div id="pickerParent"></div>
+    <div id="controls">
+        <div id="pickerParent">
+            <h1 id="pickColorText">Выбрать цвет</h1>
+            <div id="colorPreview"></div>
+        </div>
+        <div id="eraserBtn">
+            <h1 id="eraserText">Стереть</h1>
+        </div>
+        <div id="saveBtn">
+            <h1 id="saveText">Сохранить</h1>
+        </div>
+    </div>
 </body>
 
 </html>
