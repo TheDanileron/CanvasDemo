@@ -1,0 +1,15 @@
+{
+    "canvas": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-canvasproject-canvas-203803-authRole",
+            "UnauthRoleArn": "arn:aws:iam::569054282782:role/amplify-canvasproject-canvas-203803-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::569054282782:role/amplify-canvasproject-canvas-203803-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-canvasproject-canvas-203803-deployment",
+            "UnauthRoleName": "amplify-canvasproject-canvas-203803-unauthRole",
+            "StackName": "amplify-canvasproject-canvas-203803",
+            "StackId": "arn:aws:cloudformation:eu-central-1:569054282782:stack/amplify-canvasproject-canvas-203803/5b9376c0-7ce4-11ea-aaaa-0a3f741aced4",
+            "AmplifyAppId": "d2aleywyec4599"
+        }
+    }
+}

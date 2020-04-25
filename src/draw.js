@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     let parent = document.getElementById("pickerParent");
     let picker = new Picker({
         parent: document.querySelector('#pickerParent'), onChange: onColorSelected, onOpen: onPickerOpen,
@@ -11,9 +12,9 @@ $(document).ready(function () {
     let WIDTH = canvas.width;
     let HEIGHT = canvas.height;
     let PIXELSIZE = WIDTH / DIMENSION;
-    let RGBA = [0, 0, 0, 0.2];
-    let COLOR = "rgba(" + RGBA[0] + ", " + RGBA[1] + ", " + RGBA[2] + ", " + RGBA[3] + ")";
-    CTX.strokeStyle = COLOR;
+    let COLOR_GRID = "#969696"
+    let COLOR = "#00ccffff"
+    CTX.strokeStyle = COLOR_GRID;
     let ERASE = false;
     let canvasEnabled = true;
     let pictureMap = []
