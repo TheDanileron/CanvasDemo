@@ -1,5 +1,12 @@
+import './styles/draw.css'
+import Picker from '../color_picker/dist/vanilla-picker'
+import API, { graphqlOperation } from '@aws-amplify/api'
+import { createMultiplayerCanvasModel } from './graphql/mutations';
+import configure from './configure-api'
+
 $(document).ready(function () {
-    
+    configure();
+
     let parent = document.getElementById("pickerParent");
     let picker = new Picker({
         parent: document.querySelector('#pickerParent'), onChange: onColorSelected, onOpen: onPickerOpen,
@@ -17,16 +24,16 @@ $(document).ready(function () {
     CTX.strokeStyle = COLOR_GRID;
     let ERASE = false;
     let canvasEnabled = true;
-    let pictureMap = []
+    let pictureMap = {}
 
     for (let i = 0; i < DIMENSION; ++i) {
-        x = Math.floor((i * WIDTH / DIMENSION));
+        let x = Math.floor((i * WIDTH / DIMENSION));
         CTX.beginPath();
         CTX.moveTo(x, 0);
         CTX.lineTo(x, HEIGHT);
         CTX.stroke();
 
-        y = Math.floor((i * HEIGHT / DIMENSION));
+        let y = Math.floor((i * HEIGHT / DIMENSION));
         CTX.beginPath();
         CTX.moveTo(0, y);
         CTX.lineTo(WIDTH, y);
@@ -39,7 +46,7 @@ $(document).ready(function () {
 
         var offsetX = e.offsetX;
         var offsetY = e.offsetY;
-        pixel = [Math.floor(offsetX / PIXELSIZE), Math.floor(offsetY / PIXELSIZE)];
+        let pixel = [Math.floor(offsetX / PIXELSIZE), Math.floor(offsetY / PIXELSIZE)];
         fillPixel(pixel);
     }
 
@@ -72,7 +79,7 @@ $(document).ready(function () {
     }
 
     function setColor(colorRGBA) {
-        COLOR_STR = "rgba(" + colorRGBA[0] + ", " + colorRGBA[1] + ", " + colorRGBA[2] + ", " + colorRGBA[3] + ")";
+        let COLOR_STR = "rgba(" + colorRGBA[0] + ", " + colorRGBA[1] + ", " + colorRGBA[2] + ", " + colorRGBA[3] + ")";
         COLOR = "#" + rgba2hex(COLOR_STR);
         window.COLOR = COLOR;
     }
@@ -96,6 +103,19 @@ $(document).ready(function () {
 
     function save(x, y) {
         console.log(pictureMap);
+        savePicture(x, y);
+    }
+
+    async function savePicture(x, y) {
+        console.log(JSON.stringify(pictureMap));
+        const data = { 
+            title: "Test Picture", 
+            grid_dimension: DIMENSION,
+            picture: JSON.stringify(pictureMap),
+            grid_coordinates: JSON.stringify({x: x, y: y})
+         }
+         await API.graphql(graphqlOperation(createMultiplayerCanvasModel, {input: data}));
+         window.location = "index.html";
     }
 
     function rgba2hex(orig) {
@@ -110,7 +130,7 @@ $(document).ready(function () {
         if (alpha !== "") {
           a = alpha;
         } else {
-          a = 01;
+          a = 1;
         }
         // multiply before convert to HEX
         a = ((a * 255) | 1 << 8).toString(16).slice(1)

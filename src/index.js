@@ -1,22 +1,11 @@
 import API, { graphqlOperation } from '@aws-amplify/api'
-import Amplify from 'aws-amplify';
-import awsconfig from './aws-exports';
+import configure from './configure-api'
 import { listMultiplayerCanvasModels } from './graphql/queries';
 
+import './styles/index.css'
+
 $(document).ready(function () {
-    Amplify.configure(awsconfig);
-    API.configure(awsconfig);
-    async function createNewTodo() {
-        const test = { 
-            title: "Test", 
-            grid_dimension: 10,
-            picture: ["", ""],
-            grid_coordinates: ["", ""]
-         }
-         const allPictures = await API.graphql(graphqlOperation(listMultiplayerCanvasModels));
-         window.list = allPictures.data
-    }
-    createNewTodo();
+    configure();
 
     let canvas = $("#mainCanvas");
     let CTX = canvas.get(0).getContext("2d");
@@ -60,4 +49,37 @@ $(document).ready(function () {
         let pixel = [Math.floor(e.offsetX / (DIMENSION * PIXEL_SIZE)), Math.floor(e.offsetY / (DIMENSION * PIXEL_SIZE))];
         window.location = "draw.html?x=" + pixel[0] + "&y=" + pixel[1];
     });
+
+    getPictures();
+
+    async function getPictures() {
+        let pictures = await API.graphql(graphqlOperation(listMultiplayerCanvasModels));
+        let items = pictures.data.listMultiplayerCanvasModels.items;
+
+        for(let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let coord = JSON.parse(item['grid_coordinates']);
+            let picture = JSON.parse(item['picture']);
+
+            for(let subcoord in picture) {
+                drawPixel(coord,subcoord.split('_'), picture[subcoord])
+            }
+        }
+        console.log(items);
+    }
+
+    function drawPixel(coord, subcoord, color) {
+        let x = parseInt(coord['x']);
+        let y = parseInt(coord['y']);
+        let subX = parseInt(subcoord[0]);
+        let subY = parseInt(subcoord[1]);
+
+        let rectX = (x * DIMENSION + (subX * DIMENSION/25))
+        let rectY = (y * DIMENSION + (subY * DIMENSION/25))
+        console.log(rectX);
+        console.log(rectY);
+        CTX.fillStyle = color;
+        CTX.fillRect(rectX, rectY, DIMENSION/25, DIMENSION/25);
+    }
+
 })
