@@ -12,17 +12,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script src="../color_picker/dist/vanilla-picker.js"></script> -->
     <!-- <script src="draw.js"></script> -->
-    <canvas id="canvas" width=500 height=500 style="display: inline-block; border: 1px black solid;"></canvas>
-    <div id="controls">
-        <div id="pickerParent">
-            <h1 id="pickColorText">Выбрать цвет</h1>
-            <div id="colorPreview"></div>
-        </div>
-        <div id="eraserBtn">
-            <h1 id="eraserText">Стереть</h1>
-        </div>
-        <div id="saveBtn">
-            <h1 id="saveText">Сохранить</h1>
+    <div id="container">
+        <canvas id="canvas" width=500 height=500 style="display: inline-block; border: 1px black solid;"></canvas>
+        <div id="controls">
+            <div id="pickerParent">
+                <h1 id="pickColorText">Цвет</h1>
+                <div id="colorPreview"></div>
+            </div>
+            <div id="eraserBtn">
+                <h1 id="eraserText">Ластик</h1>
+                <img id="eraserImg">
+            </div>
+            <div id="saveBtn">
+                <h1 id="saveText">Сохранить</h1>
+            </div>
         </div>
     </div>
 </body>

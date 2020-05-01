@@ -25,20 +25,21 @@ $(document).ready(function () {
     let ERASE = false;
     let canvasEnabled = true;
     let pictureMap = {}
+    $('#colorPreview').css('background-color', COLOR);
 
-    for (let i = 0; i < DIMENSION; ++i) {
-        let x = Math.floor((i * WIDTH / DIMENSION));
-        CTX.beginPath();
-        CTX.moveTo(x, 0);
-        CTX.lineTo(x, HEIGHT);
-        CTX.stroke();
+    // for (let i = 0; i < DIMENSION; ++i) {
+    //     let x = Math.floor((i * WIDTH / DIMENSION));
+    //     CTX.beginPath();
+    //     CTX.moveTo(x, 0);
+    //     CTX.lineTo(x, HEIGHT);
+    //     CTX.stroke();
 
-        let y = Math.floor((i * HEIGHT / DIMENSION));
-        CTX.beginPath();
-        CTX.moveTo(0, y);
-        CTX.lineTo(WIDTH, y);
-        CTX.stroke();
-    }
+    //     let y = Math.floor((i * HEIGHT / DIMENSION));
+    //     CTX.beginPath();
+    //     CTX.moveTo(0, y);
+    //     CTX.lineTo(WIDTH, y);
+    //     CTX.stroke();
+    // }
 
     $("#canvas").on('mousedown touchstart touchmove mousemove', mouseFill);
     function mouseFill(e) {
@@ -82,14 +83,26 @@ $(document).ready(function () {
         let COLOR_STR = "rgba(" + colorRGBA[0] + ", " + colorRGBA[1] + ", " + colorRGBA[2] + ", " + colorRGBA[3] + ")";
         COLOR = "#" + rgba2hex(COLOR_STR);
         window.COLOR = COLOR;
+        $('#colorPreview').css('background-color', COLOR);
     }
 
-    let eraser = document.getElementById('eraserBtn');
     $("#eraserBtn").on('mousedown', function (e) {
         ERASE = !ERASE;
+        let eraserBtn = $("#eraserBtn");
+        let pickerBtn = $("#pickerParent");
+        if(ERASE){
+            eraserBtn.css('border', '2px wheat solid');
+            eraserBtn.css('text-decoration', 'underline');
+            pickerBtn.css('border', '0');
+            pickerBtn.css('text-decoration', 'none');
+        } else {
+            pickerBtn.css('border', '2px wheat solid');
+            pickerBtn.css('text-decoration', 'underline');
+            eraserBtn.css('border', '0');
+            eraserBtn.css('text-decoration', 'none');
+        }
     });
 
-    let saveBtn = document.getElementById('saveBtn');
     $("#saveBtn").click(function (e) {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
