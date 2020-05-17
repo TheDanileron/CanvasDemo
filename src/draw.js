@@ -27,6 +27,7 @@ $(document).ready(function () {
     let pictureMap = {}
     $('#colorPreview').css('background-color', COLOR);
 
+    //
     // for (let i = 0; i < DIMENSION; ++i) {
     //     let x = Math.floor((i * WIDTH / DIMENSION));
     //     CTX.beginPath();
